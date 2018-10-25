@@ -10,7 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/ljwolospoke/dungeons.git"
   },
-  "author": "Lance",
+  "author": "Lance", "Brandon", "Sheree",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ljwolospoke/dungeons/issues"
