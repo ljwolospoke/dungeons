@@ -1,0 +1,19 @@
+{
+  "name": "dungeons",
+  "version": "1.0.0",
+  "description": "Dungeons and Dragons",
+  "main": "dnd.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ljwolospoke/dungeons.git"
+  },
+  "author": "Lance",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ljwolospoke/dungeons/issues"
+  },
+  "homepage": "https://github.com/ljwolospoke/dungeons#readme"
+}
