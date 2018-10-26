@@ -10,10 +10,14 @@
     "type": "git",
     "url": "git+https://github.com/ljwolospoke/dungeons.git"
   },
-  "author": "Lance", "Brandon", "Sheree",
+  "author": "Lance, Brandon, Sheree",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/ljwolospoke/dungeons/issues"
   },
-  "homepage": "https://github.com/ljwolospoke/dungeons#readme"
+  "homepage": "https://github.com/ljwolospoke/dungeons#readme",
+  "dependencies": {
+    "express-handlebars": "^3.0.0",
+    "package.json": "^2.0.1"
+  }
 }
