@@ -11,8 +11,13 @@ app.use(function(req, res, next){
         res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
         next();
 });
-//routes go here
 
+//static pages
+app.use(express.static(__dirname + '/public'));
+
+
+
+//routes go here
 app.get('/', function(req, res) {
         res.render('home');
 });
@@ -21,8 +26,19 @@ app.get('/about', function(req, res){
 });
 
 
-//static pages
-app.use(express.static(__dirname + '/public'));
+app.get('/character', function(req, res){
+        res.render('character', {
+
+        
+        exChar: [
+               { name: 'linix', race: 'DragonBorn', class: 'Sorcerer-Wizard', gender: 'male' },
+                ],
+
+
+});
+
+});
+
 
 
 // 404 catch-all handler (middleware)
