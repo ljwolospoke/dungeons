@@ -20,6 +20,14 @@ app.get('/about', function(req, res){
         res.render('about');
 });
 
+app.get('/character', function(req, res) {
+        res.render('character');
+});
+
+app.get('/dice', function(req, res) {
+        res.render('dice');
+});
+
 
 //static pages
 app.use(express.static(__dirname + '/public'));
