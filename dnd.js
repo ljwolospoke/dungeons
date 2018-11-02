@@ -55,17 +55,25 @@ app.get('/about', function(req, res){
         res.render('about');
 });
 
+app.get('/character', function(req, res) {
+        res.render('character');
+});
+
+app.get('/dice', function(req, res) {
+        res.render('dice');
+});
+
 app.post('/process', function(req,res){
   if(req.xhr || req.accepts('json,html')==='json'){
-  // if there were an error, we would send {error: 'error description' }
-  console.log(JSON.stringify(req.body));
-  res.send({
-  success: true,
-  message: "The Submission Was Successful!"
- });
-} else {
-  // if there were an error, we would redirect to an error page
-  res.redirect(303, '/');
+    // if there were an error, we would send {error: 'error description' }
+    console.log(JSON.stringify(req.body));
+    res.send({
+      success: true,
+      message: "The Submission Was Successful!"
+    });
+  } else {
+    // if there were an error, we would redirect to an error page
+    res.redirect(303, '/');
   }
 });
 
