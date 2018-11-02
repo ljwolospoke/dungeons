@@ -12,6 +12,7 @@ app.use(function(req, res, next){
         res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
         next();
 });
+
 //routes go here
 app.use(require('body-parser').urlencoded({ extended: true }));
 app.use(require('cookie-parser')(credentials.cookieSecret));
@@ -28,7 +29,12 @@ for(var name in req.headers) s += name + ': ' + req.headers[name] + '/n';
 res.send(s);
 });
 
+//static pages
+app.use(express.static(__dirname + '/public'));
 
+
+
+//routes go here
 app.get('/', function(req, res) {
   req.session.userName = 'Brandon';
   console.log(req.cookies.website);
@@ -70,8 +76,19 @@ app.use(function(req, res, next){
 });
 
 
-//static pages
-app.use(express.static(__dirname + '/public'));
+app.get('/character', function(req, res){
+        res.render('character', {
+
+        
+        exChar: [
+               { name: 'linix', race: 'DragonBorn', class: 'Sorcerer-Wizard', gender: 'male' },
+                ],
+
+
+});
+
+});
+
 
 
 // 404 catch-all handler (middleware)
