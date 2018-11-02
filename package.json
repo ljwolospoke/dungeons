@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/ljwolospoke/dungeons#readme",
   "dependencies": {
+    "cookie-parser": "^1.4.3",
     "express-handlebars": "^3.0.0",
     "package.json": "^2.0.1"
   }
