@@ -8,13 +8,39 @@
 <script src ="//code.jquery.com/jquery-2.0.2.min.js"></script>
 </head>
 <body>
+Number of users logged in: <span id="counter">10</span>
+<br><br>
+
+{{#if flash}}
+  <div class="alert alert-dismissible alert-{{flash.type}}">
+    <button type="button" class="close"
+      data-dismiss="alert" aria-hidden="true">&times;<button>
+        <strong>{{flash.intro}}</strong> {{{flash.message}}}
+  </div>
+{{/if}}
 
 <a href= "/character">character</a>
 <a href= "/homepage">homepage</a>
 <a href= "/dicepage">dicepage</a>
 
 {{{body}}}
-
+ <script>
+/*
+ setInterval(function() {
+  $.ajax({
+    url: "login-counter",
+    type: "GET",
+    success: function(data) {
+      $("#counter").empty();
+      $("#counter").append(data.counter);
+      },
+       error: function() {
+         alert("An error occurred!");
+      }
+     });
+    }, 1,000);
+*/
+</script>
 </body>
 </html>
 

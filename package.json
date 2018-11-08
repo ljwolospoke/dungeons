@@ -18,7 +18,11 @@
   "homepage": "https://github.com/ljwolospoke/dungeons#readme",
   "dependencies": {
     "cookie-parser": "^1.4.3",
+    "espress": "0.0.0",
+    "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
+    "express-session": "^1.15.6",
+    "flash": "file:node_modules/flash",
     "package.json": "^2.0.1"
   }
 }

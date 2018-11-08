@@ -1,6 +1,6 @@
 var express = require('express');
 var credentials = require('./credentials.js');
-
+//var flash = require('flash');
 var app = express();
 var handlebars = require('express-handlebars')                                 
         .create({ defaultLayout:'main' });                                     
@@ -11,6 +11,46 @@ app.set('port', process.env.PORT || 3000);
 app.use(function(req, res, next){
         res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
         next();
+});
+
+app.get('/sign-ajax', function(req, res) {
+  res.render('sign-ajax', {
+  login: req.session.user_id?req.session.user_id:false,
+  user_name:req.session.user_first_name,
+  });
+});
+
+app.post("/process", function(req, res) {
+  req.session.flash = "Form received successfully";
+  console.log(req.query.form);
+  console.log(req.body._csrf);
+  console.log(req.body.name);
+  console.log(req.body.email);
+  if (req.xhr || req.accepts("json,html") === "json") {
+    res.send({
+      success: true,
+      message: "Submission successful"
+    });
+   }
+   else {
+    res.redirect(303, "/");
+  }
+});
+
+app.use(function(req, res, next){
+	res.locals.flash = req.session.flash;
+next();
+});
+
+var COUNTER = 0;
+setInterval(function() {
+  COUNTER++;
+},  5000);
+
+app.get('/login-counter', function(req, res) {
+  res.send({
+    counter: COUNTER
+  });
 });
 
 //routes go here
@@ -32,8 +72,6 @@ res.send(s);
 //static pages
 app.use(express.static(__dirname + '/public'));
 
-
-
 //routes go here
 app.get('/', function(req, res) {
   req.session.userName = 'Brandon';
@@ -43,13 +81,26 @@ app.get('/', function(req, res) {
 });
 
 app.get('/sign', function(req, res){
-res.render('sign', { csrf: 'CSRF token goes here' });
+  res.render('sign', { csrf: 'CSRF token goes here' });
+});
+
+app.get('/logout', function(req, res){
+  res.render('logout')
 });
 
 app.get('/sign-ajax', function(req, res){
-res.render('sign-ajax', { csrf: 'CSRF token goes here' });
+  res.render('sign-ajax', { csrf: 'CSRF token goes here' });
 });
 
+if(req.xhr) return res.json({ success: true });
+  req.session.flash = {
+    type: 'success',
+    intro: 'Thank you',
+    message: 'Submission successful!',
+  };
+    return res.redirect(303, '/');
+  });
+});
 
 app.get('/about', function(req, res){
         res.render('about');
@@ -62,27 +113,7 @@ app.get('/character', function(req, res) {
 app.get('/dice', function(req, res) {
         res.render('dice');
 });
-
-app.post('/process', function(req,res){
-  if(req.xhr || req.accepts('json,html')==='json'){
-    // if there were an error, we would send {error: 'error description' }
-    console.log(JSON.stringify(req.body));
-    res.send({
-      success: true,
-      message: "The Submission Was Successful!"
-    });
-  } else {
-    // if there were an error, we would redirect to an error page
-    res.redirect(303, '/');
-  }
-});
-
-app.use(function(req, res, next){
-  res.locals.flash = req.session.flash;
-  delete req.session.flash;
-  next();
-});
-
+	
 
 app.get('/character', function(req, res){
         res.render('character', {
