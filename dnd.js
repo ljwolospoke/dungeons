@@ -7,17 +7,27 @@ var handlebars = require('express-handlebars')
 app.engine('handlebars', handlebars.engine);                                  
 app.set('view engine', 'handlebars'); 
 app.set('port', process.env.PORT || 3000);
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('cookie-parser')(credentials.cookieSecret));
+app.use(require('express-session') ({
+  resave: false,
+  saveUninitialized: false,
+  secret: credentials.cookieSecret,
+}));
 
 app.use(function(req, res, next){
         res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
         next();
 });
 
-app.get('/sign-ajax', function(req, res) {
-  res.render('sign-ajax', {
-  login: req.session.user_id?req.session.user_id:false,
-  user_name:req.session.user_first_name,
-  });
+app.use(function(req, res, next){
+  res.locals.user = req.session.user;
+  next();
+});
+
+
+app.get('/', function(req, res) {
+  res.render('sign-ajax');
 });
 
 app.post("/process", function(req, res) {
@@ -26,6 +36,10 @@ app.post("/process", function(req, res) {
   console.log(req.body._csrf);
   console.log(req.body.name);
   console.log(req.body.email);
+  req.session.user = {
+    email: req.body.email,
+    age: 50
+  };
   if (req.xhr || req.accepts("json,html") === "json") {
     res.send({
       success: true,
@@ -35,11 +49,6 @@ app.post("/process", function(req, res) {
    else {
     res.redirect(303, "/");
   }
-});
-
-app.use(function(req, res, next){
-	res.locals.flash = req.session.flash;
-next();
 });
 
 var COUNTER = 0;
@@ -73,7 +82,7 @@ res.send(s);
 app.use(express.static(__dirname + '/public'));
 
 //routes go here
-app.get('/', function(req, res) {
+app.get('/home', function(req, res) {
   req.session.userName = 'Brandon';
   console.log(req.cookies.website);
   res.cookie('website', 'alert');
@@ -89,22 +98,14 @@ app.get('/logout', function(req, res){
 });
 
 app.get('/sign-ajax', function(req, res){
-  res.render('sign-ajax', { csrf: 'CSRF token goes here' });
-});
-
-if(req.xhr) return res.json({ success: true });
   req.session.flash = {
     type: 'success',
     intro: 'Thank you',
     message: 'Submission successful!',
   };
-    return res.redirect(303, '/');
-  });
+  return res.redirect(303, '/');
 });
 
-app.get('/about', function(req, res){
-        res.render('about');
-});
 
 app.get('/character', function(req, res) {
         res.render('character');
