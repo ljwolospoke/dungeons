@@ -55,12 +55,22 @@ app.get('/about', function(req, res){
         res.render('about');
 });
 
-app.get('/character', function(req, res) {
-        res.render('character');
-});
-
 app.get('/dice', function(req, res) {
         res.render('dice');
+});
+
+app.get('/character', function(req, res){
+        res.render('character', {
+
+
+        exChar: [
+               { name: 'Linix', race: 'DragonBorn', class: 'Sorcerer-Wizard', gender: 'male', },
+               { name: 'Aoife', race: 'Half-Elf', class: 'Priest', gender: 'Female', },
+
+		],
+
+
+  });
 });
 
 app.post('/process', function(req,res){
@@ -82,21 +92,6 @@ app.use(function(req, res, next){
   delete req.session.flash;
   next();
 });
-
-
-app.get('/character', function(req, res){
-        res.render('character', {
-
-        
-        exChar: [
-               { name: 'linix', race: 'DragonBorn', class: 'Sorcerer-Wizard', gender: 'male' },
-                ],
-
-
-});
-
-});
-
 
 
 // 404 catch-all handler (middleware)
