@@ -1,16 +1,64 @@
 var express = require('express');
 var credentials = require('./credentials.js');
-
+//var flash = require('flash');
 var app = express();
 var handlebars = require('express-handlebars')                                 
         .create({ defaultLayout:'main' });                                     
 app.engine('handlebars', handlebars.engine);                                  
 app.set('view engine', 'handlebars'); 
 app.set('port', process.env.PORT || 3000);
+app.use(require('body-parser').urlencoded({ extended: true }));
+app.use(require('cookie-parser')(credentials.cookieSecret));
+app.use(require('express-session') ({
+  resave: false,
+  saveUninitialized: false,
+  secret: credentials.cookieSecret,
+}));
 
 app.use(function(req, res, next){
         res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
         next();
+});
+
+app.use(function(req, res, next){
+  res.locals.user = req.session.user;
+  next();
+});
+
+
+app.get('/sign-ajax', function(req, res) {
+  res.render('sign-ajax');
+});
+
+app.post("/process", function(req, res) {
+  req.session.flash = "Form received successfully";
+  console.log(req.query.form);
+  console.log(req.body._csrf);
+  console.log(req.body.name);
+  console.log(req.body.email);
+  req.session.user = {
+    email: req.body.email
+  };
+  if (req.xhr || req.accepts("json,html") === "json") {
+    res.send({
+      success: true,
+      message: "Submission successful"
+    });
+   }
+   else {
+    res.redirect(303, "/");
+  }
+});
+
+var COUNTER = 0;
+setInterval(function() {
+  COUNTER++;
+},  5000);
+
+app.get('/login-counter', function(req, res) {
+  res.send({
+    counter: COUNTER
+  });
 });
 
 //routes go here
@@ -32,8 +80,6 @@ res.send(s);
 //static pages
 app.use(express.static(__dirname + '/public'));
 
-
-
 //routes go here
 app.get('/', function(req, res) {
   req.session.userName = 'Brandon';
@@ -43,18 +89,33 @@ app.get('/', function(req, res) {
 });
 
 app.get('/sign', function(req, res){
-res.render('sign', { csrf: 'CSRF token goes here' });
+  res.render('sign', { csrf: 'CSRF token goes here' });
+});
+
+app.get('/logout', function(req, res){
+  res.render('logout')
 });
 
 app.get('/sign-ajax', function(req, res){
-res.render('sign-ajax', { csrf: 'CSRF token goes here' });
+  req.session.flash = {
+    type: 'success',
+    intro: 'Thank you',
+    message: 'Submission successful!',
+  };
+  return res.redirect(303, '/');
 });
 
 
-app.get('/about', function(req, res){
-        res.render('about');
+
+app.get('/character', function(req, res) {
+        res.render('character');
 });
 
+app.get('/dice', function(req, res) {
+        res.render('dice');
+});
+	
+=======
 app.get('/dice', function(req, res) {
         res.render('dice');
 });
