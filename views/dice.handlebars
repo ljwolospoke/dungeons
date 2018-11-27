@@ -1,1 +1,16 @@
-<h1> This is the dice page </h1>
+<h1> Roll the dice </h1>
+<script>
+function diceRoll(max) {
+ var random = Math.floor((Math.random() * Math.floor(max)) + 1);
+ window.alert(random);
+ return random;
+}
+</script>
+<button onclick="diceRoll(4);">Four sided</button> <br>  <br>
+<button onclick="diceRoll(6);">Six Sided</button> <br>  <br>
+<button onclick="diceRoll(8);">Eight Sided</button> <br>  <br>
+<button onclick="diceRoll(10);">Ten Sided</button> <br>  <br>
+<button onclick="diceRoll(100);">100 sided</button> <br>  <br>
+<button onclick="diceRoll(12);">Twelve Sided</button> <br>  <br>
+<button onclick="diceRoll(20);">Twenty Sided</button>
+

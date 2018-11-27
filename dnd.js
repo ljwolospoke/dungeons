@@ -26,7 +26,7 @@ app.use(function(req, res, next){
 });
 
 
-app.get('/', function(req, res) {
+app.get('/sign-ajax', function(req, res) {
   res.render('sign-ajax');
 });
 
@@ -37,8 +37,7 @@ app.post("/process", function(req, res) {
   console.log(req.body.name);
   console.log(req.body.email);
   req.session.user = {
-    email: req.body.email,
-    age: 50
+    email: req.body.email
   };
   if (req.xhr || req.accepts("json,html") === "json") {
     res.send({
@@ -82,7 +81,7 @@ res.send(s);
 app.use(express.static(__dirname + '/public'));
 
 //routes go here
-app.get('/home', function(req, res) {
+app.get('/', function(req, res) {
   req.session.userName = 'Brandon';
   console.log(req.cookies.website);
   res.cookie('website', 'alert');
