@@ -79,6 +79,9 @@ res.send(s);
 //static pages
 app.use(express.static(__dirname + '/public'));
 
+app.use(require('body-parser').urlencoded({ extended: true }));
+
+
 //routes go here
 app.get('/', function(req, res) {
   req.session.userName = 'Brandon';
@@ -87,14 +90,7 @@ app.get('/', function(req, res) {
   res.render('home');
 });
 
-app.get('/sign', function(req, res){
-  res.render('sign', { csrf: 'CSRF token goes here' });
-});
-
-app.get('/logout', function(req, res){
-  res.render('logout')
-});
-
+//
 app.get('/sign-ajax', function(req, res){
   req.session.flash = {
     type: 'success',
@@ -105,12 +101,31 @@ app.get('/sign-ajax', function(req, res){
 });
 
 
+<<<<<<< HEAD
 app.get('/dice', function(req, res) {
         res.render('dice');
 });
 	
 app.get('/character', function(req, res){
         res.render('character', {
+=======
+
+app.get('/character', function(req, res) {
+        res.render('character');
+});
+
+app.get('/dice', function(req, res) {
+        res.render('dice');
+});
+	
+=======
+app.get('/dice', function(req, res) {
+        res.render('dice');
+});
+
+app.get('/character-ajax', function(req, res){
+        res.render('character-ajax', {  csrf: 'CSRF token goes here',   
+>>>>>>> ea897f65acec178e836802d0698dd621263adcc0
 
 
         exChar: [
@@ -143,6 +158,10 @@ app.use(function(req, res, next){
   next();
 });
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> ea897f65acec178e836802d0698dd621263adcc0
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
         res.status(404);
