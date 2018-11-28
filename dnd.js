@@ -31,8 +31,7 @@ app.get('/sign-ajax', function(req, res) {
 });
 
 app.post("/process", function(req, res) {
-  req.session.flash = "Form received successfully";
-  console.log(req.query.form);
+   console.log(req.query.form);
   console.log(req.body._csrf);
   console.log(req.body.name);
   console.log(req.body.email);
@@ -106,29 +105,43 @@ app.get('/sign-ajax', function(req, res){
 });
 
 
-app.get('/character', function(req, res) {
-        res.render('character');
-});
-
 app.get('/dice', function(req, res) {
         res.render('dice');
 });
 	
-
 app.get('/character', function(req, res){
         res.render('character', {
 
-        
+
         exChar: [
-               { name: 'linix', race: 'DragonBorn', class: 'Sorcerer-Wizard', gender: 'male' },
-                ],
+               { name: 'Linix', race: 'DragonBorn', class: 'Sorcerer-Wizard', gender: 'male', },
+               { name: 'Aoife', race: 'Half-Elf', class: 'Priest', gender: 'Female', },
+
+		],
 
 
+  });
 });
 
+app.post('/process', function(req,res){
+  if(req.xhr || req.accepts('json,html')==='json'){
+    // if there were an error, we would send {error: 'error description' }
+    console.log(JSON.stringify(req.body));
+    res.send({
+      success: true,
+      message: "The Submission Was Successful!"
+    });
+  } else {
+    // if there were an error, we would redirect to an error page
+    res.redirect(303, '/');
+  }
 });
 
-
+app.use(function(req, res, next){
+  res.locals.flash = req.session.flash;
+  req.session.flash;
+  next();
+});
 
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){

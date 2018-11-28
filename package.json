@@ -22,10 +22,7 @@
     "express": "^4.16.4",
     "express-handlebars": "^3.0.0",
     "express-session": "^1.15.6",
-<<<<<<< HEAD
     "flash": "file:node_modules/flash",
-=======
->>>>>>> 5b366da8c4e2efc1b013dbdf35b8d245599feae9
     "package.json": "^2.0.1"
   }
 }
