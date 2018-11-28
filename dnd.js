@@ -31,7 +31,6 @@ res.send(s);
 
 //static pages
 app.use(express.static(__dirname + '/public'));
-app.use(require('body-parser').urlencoded({ extended: true }));
 
 
 //routes go here
@@ -48,10 +47,6 @@ app.get('/sign-ajax', function(req, res){
 res.render('sign-ajax', { csrf: 'CSRF token goes here' });
 });
 
-
-app.get('/about', function(req, res){
-        res.render('about');
-});
 
 app.get('/dice', function(req, res) {
         res.render('dice');
@@ -87,7 +82,7 @@ app.post('/process', function(req,res){
 
 app.use(function(req, res, next){
   res.locals.flash = req.session.flash;
-  delete req.session.flash;
+  req.session.flash;
   next();
 });
 
