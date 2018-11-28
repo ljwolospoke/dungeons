@@ -26,7 +26,7 @@ app.use(function(req, res, next){
 });
 
 
-app.get('/sign-ajax', function(req, res) {
+app.get('/', function(req, res) {
   res.render('sign-ajax');
 });
 
@@ -78,7 +78,7 @@ app.use(require('body-parser').urlencoded({ extended: true }));
 
 
 //routes go here
-app.get('/', function(req, res) {
+app.get('/home', function(req, res) {
   req.session.userName = 'Brandon';
   console.log(req.cookies.website);
   res.cookie('website', 'alert');
