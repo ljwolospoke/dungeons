@@ -31,8 +31,7 @@ app.get('/sign-ajax', function(req, res) {
 });
 
 app.post("/process", function(req, res) {
-  req.session.flash = "Form received successfully";
-  console.log(req.query.form);
+   console.log(req.query.form);
   console.log(req.body._csrf);
   console.log(req.body.name);
   console.log(req.body.email);
@@ -102,6 +101,14 @@ app.get('/sign-ajax', function(req, res){
 });
 
 
+<<<<<<< HEAD
+app.get('/dice', function(req, res) {
+        res.render('dice');
+});
+	
+app.get('/character', function(req, res){
+        res.render('character', {
+=======
 
 app.get('/character', function(req, res) {
         res.render('character');
@@ -118,6 +125,7 @@ app.get('/dice', function(req, res) {
 
 app.get('/character-ajax', function(req, res){
         res.render('character-ajax', {  csrf: 'CSRF token goes here',   
+>>>>>>> ea897f65acec178e836802d0698dd621263adcc0
 
 
         exChar: [
@@ -146,11 +154,14 @@ app.post('/process', function(req,res){
 
 app.use(function(req, res, next){
   res.locals.flash = req.session.flash;
-  delete req.session.flash;
+  req.session.flash;
   next();
 });
 
+<<<<<<< HEAD
+=======
 
+>>>>>>> ea897f65acec178e836802d0698dd621263adcc0
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
         res.status(404);
