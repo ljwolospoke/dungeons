@@ -8,13 +8,116 @@
 <script src ="//code.jquery.com/jquery-2.0.2.min.js"></script>
 </head>
 <body>
+Number of users logged in: <span id="counter">10</span>
+<br><br>
 
 <a href= "/character-ajax">Create Character</a>
+Username: {{user.email}}<br><br>
 <a href= "/">Homepage</a>
 <a href= "/dice">Dice</a>
 
-{{{body}}}
 
+{{#if flash}}
+  <div class="alert alert-dismissible alert-{{flash.type}}">
+    <button type="button" class="close"
+      data-dismiss="alert" aria-hidden="true">&times;<button>
+        <strong>{{flash.intro}}</strong> {{{flash.message}}}
+  </div>
+{{/if}}
+
+<nav>
+      <ul>
+        <li class="nav"><a href="/character">Create Character</a></li> 
+        <li class="nav"><a href="/">Homepage</a></li>
+        <li class="nav"><a href="/dice">Dice</a></li>
+        <li class="nav"><a href="/sign-ajax">Sign In</a></li>
+      </ul>
+    </nav>
+
+<div style="float:right">
+<form align="right" name="form1" method="post" action="sign-ajax">
+  <label class="sign-ajax">
+  <input name="submit2" type="submit" id="submit2" value="log out">
+  </label>
+</form>
+</div>
+
+<style>
+nav{
+  display: block;
+  width: 50%;
+  margin: auto auto auto auto;
+  height: 40px;
+  background: blue;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+nav ul li {
+  list-style: none;
+}
+
+nav ul li a{
+
+display:block;
+text-align:center;
+text-decoration:none;
+float: left;
+color:white;
+width:inherit;
+margin: 0 4%;
+font-size:115%;
+padding: 5px 25px 5px;
+}
+
+nav ul li a:hover{
+ color:red;
+ background-color: white;
+}
+
+li.nav{
+  display:block;
+  width: auto;
+  margin: auto;
+}
+
+nav ul{
+  margin: 8.5px;
+  padding: 0;
+}
+
+body {background-color: lightgrey;}
+
+h1 {
+  color: blue;
+  text-shadow: 2px 2px 2px black;
+  font-size: 200%;
+  font-family: verdana;
+}
+
+p    {color: red;}
+
+
+</style>
+
+{{{body}}}
+ <script>
+/*
+ setInterval(function() {
+  $.ajax({
+    url: "login-counter",
+    type: "GET",
+    success: function(data) {
+      $("#counter").empty();
+      $("#counter").append(data.counter);
+      },
+       error: function() {
+         alert("An error occurred!");
+      }
+     });
+    }, 1,000);
+*/
+</script>
 </body>
 </html>
 
