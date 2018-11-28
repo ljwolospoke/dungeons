@@ -49,16 +49,11 @@ app.post("/process", function(req, res) {
   }
 });
 
-var COUNTER = 0;
-setInterval(function() {
-  COUNTER++;
-},  5000);
+var METHOD = 0;
+function counter(){
+ METHOD++;
+};
 
-app.get('/login-counter', function(req, res) {
-  res.send({
-    counter: COUNTER
-  });
-});
 
 //routes go here
 app.use(require('body-parser').urlencoded({ extended: true }));
