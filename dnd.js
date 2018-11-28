@@ -101,31 +101,12 @@ app.get('/sign-ajax', function(req, res){
 });
 
 
-<<<<<<< HEAD
 app.get('/dice', function(req, res) {
         res.render('dice');
 });
 	
-app.get('/character', function(req, res){
-        res.render('character', {
-=======
-
-app.get('/character', function(req, res) {
-        res.render('character');
-});
-
-app.get('/dice', function(req, res) {
-        res.render('dice');
-});
-	
-=======
-app.get('/dice', function(req, res) {
-        res.render('dice');
-});
-
 app.get('/character-ajax', function(req, res){
         res.render('character-ajax', {  csrf: 'CSRF token goes here',   
->>>>>>> ea897f65acec178e836802d0698dd621263adcc0
 
 
         exChar: [
@@ -158,10 +139,7 @@ app.use(function(req, res, next){
   next();
 });
 
-<<<<<<< HEAD
-=======
 
->>>>>>> ea897f65acec178e836802d0698dd621263adcc0
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
         res.status(404);
