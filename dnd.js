@@ -99,6 +99,10 @@ app.get('/character', function(req, res){
 
 
 
+//styles go here:
+
+
+
 // 404 catch-all handler (middleware)
 app.use(function(req, res, next){
         res.status(404);
