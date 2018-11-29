@@ -2,6 +2,13 @@ var express = require('express');
 var credentials = require('./credentials.js');
 //var flash = require('flash');
 var app = express();
+var http = require("http");
+var fs = require("fs");
+var mysql = require("mysql");
+var credentials = require("./credentials");
+var qs = require("querystring");
+
+
 var handlebars = require('express-handlebars')                                 
         .create({ defaultLayout:'main' });                                     
 app.engine('handlebars', handlebars.engine);                                  
@@ -49,11 +56,16 @@ app.post("/process", function(req, res) {
   }
 });
 
-var METHOD = 0;
-function counter(){
- METHOD++;
-};
+var COUNTER = 0;
+setInterval(function() {
+  COUNTER++;
+},  5000);
 
+app.get('/login-counter', function(req, res) {
+  res.send({
+    counter: COUNTER
+  });
+});
 
 //routes go here
 app.use(require('body-parser').urlencoded({ extended: true }));
@@ -133,6 +145,82 @@ app.use(function(req, res, next){
   req.session.flash;
   next();
 });
+
+function sendResponse(req, res, data) {
+  res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
+  res.end(JSON.stringify(data));
+}
+
+function users(req, res) {
+  var conn = mysql.createConnection(credentials.connection);
+  // connect to database
+  conn.connect(function(err) {
+    if (err) {
+      console.error("ERROR: cannot connect: " + e);
+      return;
+    }
+    // query the database
+    conn.query("SELECT * FROM USERS", function(err, rows, fields) {
+      // build json result object
+      var outjson = {};
+      if (err) {
+        // query failed
+        outjson.success = false;
+        outjson.message = "Query failed: " + err;
+      }
+      else {
+        // query successful
+        outjson.success = true;
+        outjson.message = "Query successful!";
+        outjson.data = rows;
+      }
+      // return json object that contains the result of the query
+      sendResponse(req, res, outjson);
+    });
+    conn.end();
+  });
+}
+
+function addUser(req, res) {
+  var body = "";
+  req.on("data", function (data) {
+    body += data;
+    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
+    if (body.length > 1e6) {
+      // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
+      req.connection.destroy();
+    }
+  });
+  req.on("end", function () {
+    var injson = JSON.parse(body);
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("INSERT INTO USERS (NAME) VALUE (?)", [injson.name], function(err, rows, fields) {
+        // build json result object
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+      conn.end();
+    });
+  });
+}
 
 
 // 404 catch-all handler (middleware)
