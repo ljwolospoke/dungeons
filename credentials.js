@@ -1,4 +1,9 @@
 module.exports = {
-  cookieSecret: 'your cookie secret goes here',
+  connection: {
+    host     : "ljwolos.it.pointpark.edu",
+    user     : "vetmove",
+    password : "vetmove",
+    database : "vetmove"
+  }
 };
 
