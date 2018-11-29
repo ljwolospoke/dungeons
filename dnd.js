@@ -144,13 +144,13 @@ app.use(function(req, res, next){
   next();
 });
 //sendResponse data
-app.get('/get_json_data', function(req, res, )) {
-  var ={};
+app.get('/get_json_data', function(req, res, ) {
+  var data  = {};
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.end(JSON.stringify(data));
-}
+
 //users
-app.get('/get_jsons_data', function(req, res)) {
+app.get('/get_jsons_data', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
@@ -178,9 +178,9 @@ app.get('/get_jsons_data', function(req, res)) {
     });
     conn.end();
   });
-}
+
 //addUser
-app.get('/get_json_datas', function (req, res)) {
+app.get('/get_json_datas', function (req, res) {
   var body = "";
   req.on("data", function (data) {
     body += data;
@@ -219,7 +219,7 @@ app.get('/get_json_datas', function (req, res)) {
       conn.end();
     });
   });
-}
+
 
 
 // 404 catch-all handler (middleware)
