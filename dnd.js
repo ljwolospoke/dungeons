@@ -4,10 +4,9 @@ var credentials = require('./credentials.js');
 var app = express();
 var http = require("http");
 var fs = require("fs");
-var mysql = require("mysql");
 var credentials = require("./credentials");
 var qs = require("querystring");
-
+var mysql = require("mysql");
 
 var handlebars = require('express-handlebars')                                 
         .create({ defaultLayout:'main' });                                     
@@ -86,7 +85,6 @@ res.send(s);
 //static pages
 app.use(express.static(__dirname + '/public'));
 
-app.use(require('body-parser').urlencoded({ extended: true }));
 
 
 //routes go here
@@ -145,13 +143,14 @@ app.use(function(req, res, next){
   req.session.flash;
   next();
 });
-
-function sendResponse(req, res, data) {
+//sendResponse data
+app.get('/get_json_data', function(req, res, )) {
+  var ={};
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.end(JSON.stringify(data));
 }
-
-function users(req, res) {
+//users
+app.get('/get_jsons_data', function(req, res)) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
@@ -180,8 +179,8 @@ function users(req, res) {
     conn.end();
   });
 }
-
-function addUser(req, res) {
+//addUser
+app.get('/get_json_datas', function (req, res)) {
   var body = "";
   req.on("data", function (data) {
     body += data;
