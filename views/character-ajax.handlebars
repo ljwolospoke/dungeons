@@ -2,7 +2,14 @@
 <br>
 {{> logout}}
 
-<h2>Example Character:<h2>
+<h2>Users:<h2>
+<ul>
+  {{#each users.data}}
+   <li>
+    Name: {{UserName}} <br>
+    </li>
+  {{/each}}
+</ul>
 <ul>
   {{#each exChar}}
     <li>

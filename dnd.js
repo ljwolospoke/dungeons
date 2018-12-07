@@ -1,5 +1,7 @@
 var express = require('express');
-var credentials = require('./credentials.js');
+var mysql = require("mysql");
+var credentials = require("./credentials");
+//var qs = require("querystring");
 //var flash = require('flash');
 var app = express();
 var http = require("http");
@@ -25,6 +27,45 @@ app.use(function(req, res, next){
         res.locals.showTests = app.get('env') !== 'production' && req.query.test === '1';
         next();
 });
+
+function sendResponse(req, res, data) {
+  res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
+  res.end(JSON.stringify(data));
+}
+
+app.get('/character-ajax', function(req, res) {
+  //var conn = mysql.createConnection(credentials.connection);
+  // connect to database
+  conn.connect(function(err) {
+    if (err) {
+      console.error("ERROR: cannot connect: " + e);
+      return;
+    }
+    // query the database
+    conn.query("SELECT * FROM USERS", function(err, rows, fields) {
+      // build json result object
+      var outjson = {};
+      if (err) {
+        // query failed
+        outjson.success = false;
+        outjson.message = "Query failed: " + err;
+      }
+      else {
+        // query successful
+        outjson.success = true;
+        outjson.message = "Query successful!";
+        outjson.data = rows;
+      }
+      // return json object that contains the result of the query
+     sendResponse(req, res, outjson) 
+     //res.render('character-ajax', {
+       //users: outjson
+     //});
+   });
+    conn.end();
+  });
+});
+
 
 app.use(function(req, res, next){
   res.locals.user = req.session.user;

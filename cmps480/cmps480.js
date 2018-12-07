@@ -95,6 +95,9 @@ function users(req, res) {
       }
       // return json object that contains the result of the query
       sendResponse(req, res, outjson);
+      res.render("/character-ajax", {
+        data: outjson
+      });
     });
     conn.end();
   });
