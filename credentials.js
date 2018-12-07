@@ -1,9 +1,10 @@
 module.exports = {
+ cookieSecret:'Your secret is safe with me',
   connection: {
-    host     : "ljwolos.it.pointpark.edu",
-    user     : "vetmove",
-    password : "vetmove",
-    database : "vetmove"
+    host     : "db.it.pointpark.edu",
+    user     : "dungeonsdragons",
+    password : "dungeonsdragons",
+    database : "dungeonsdragons"
   }
 };
 
