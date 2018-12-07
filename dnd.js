@@ -1,6 +1,7 @@
 var express = require('express');
 var credentials = require('./credentials.js');
 //var flash = require('flash');
+var mysql = require('mysql');
 var app = express();
 var http = require("http");
 var fs = require("fs");
@@ -27,6 +28,46 @@ app.use(function(req, res, next){
         next();
 });
 
+function sendResponse(req, res, data) {
+  res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
+  res.end(JSON.stringify(data));
+}
+
+app.get('/character', function(req, res){
+
+ var conn = mysql.createConnection(credentials.connection);
+  // connect to database
+  conn.connect(function(err) {
+    if (err) {
+      console.error("ERROR: cannot connect: " + e);
+      return;
+    }
+    // query the database
+    conn.query("SELECT * FROM USERS", function(err, rows, fields) {
+      // build json result object
+      var outjson = {};
+      if (err) {
+        // query failed
+        outjson.success = false;
+        outjson.message = "Query failed: " + err;
+      }
+      else {
+        // query successful
+        outjson.success = true;
+        outjson.message = "Query successful!";
+        outjson.data = rows;
+      }
+      // return json object that contains the result of the query
+      sendResponse(req, res, outjson);
+    });
+    conn.end();
+  });
+});
+
+
+
+
+
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
@@ -34,8 +75,10 @@ app.use(function(req, res, next){
 
 
 app.get('/', function(req, res) {
-  res.render('sign-ajax');
+  res.render('home');
 });
+
+
 
 app.post("/process", function(req, res) {
    console.log(req.query.form);
