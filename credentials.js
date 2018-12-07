@@ -1,5 +1,6 @@
 module.exports = {
-  cookieSecret: 'your cookie secret goes here',
+
+ cookieSecret:'Your secret is safe with me',
   connection: {
     host     : "db.it.pointpark.edu",
     user     : "dungeonsdragons",
