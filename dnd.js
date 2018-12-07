@@ -28,7 +28,7 @@ function sendResponse(req, res, data) {
 }
 
 app.get('/character-ajax', function(req, res) {
-  var conn = mysql.createConnection(credentials.connection);
+  //var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
     if (err) {
@@ -51,10 +51,10 @@ app.get('/character-ajax', function(req, res) {
         outjson.data = rows;
       }
       // return json object that contains the result of the query
-     //sendResponse(req, res, outjson) 
-     res.render('character-ajax', {
-       users: outjson
-     });
+     sendResponse(req, res, outjson) 
+     //res.render('character-ajax', {
+       //users: outjson
+     //});
    });
     conn.end();
   });
