@@ -1,6 +1,6 @@
 var express = require('express');
 var mysql = require("mysql");
-var credentials = require("./credentials");
+var credentials = require("/credentials");
 //var qs = require("querystring");
 //var flash = require('flash');
 var app = express();
