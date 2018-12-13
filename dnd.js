@@ -72,6 +72,7 @@ app.use(function(req, res, next){
 });
 
 
+
 app.get('/home', function(req, res) {
   res.render('home');
 });
