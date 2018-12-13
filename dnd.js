@@ -6,9 +6,9 @@ var credentials = require("./credentials");
 var app = express();
 var http = require("http");
 var fs = require("fs");
-var credentials = require("./credentials");
+//var credentials = require("./credentials");
 var qs = require("querystring");
-var mysql = require("mysql");
+//var mysql = require("mysql");
 
 var handlebars = require('express-handlebars')                                 
         .create({ defaultLayout:'main' });                                     
@@ -33,8 +33,8 @@ function sendResponse(req, res, data) {
   res.end(JSON.stringify(data));
 }
 
-app.get('/character-ajax', function(req, res) {
-  //var conn = mysql.createConnection(credentials.connection);
+app.get('/users', function(req, res) {
+  var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
     if (err) {
@@ -57,10 +57,10 @@ app.get('/character-ajax', function(req, res) {
         outjson.data = rows;
       }
       // return json object that contains the result of the query
-     sendResponse(req, res, outjson) 
-     //res.render('character-ajax', {
-       //users: outjson
-     //});
+     //sendResponse(req, res, outjson) 
+     res.render('character-ajax', {
+       users: outjson
+     });
    });
     conn.end();
   });
@@ -149,6 +149,7 @@ app.get('/sign-ajax', function(req, res){
 
 app.get('/dice', function(req, res) {
         res.render('dice');
+//if (req.session.user) {}
 });
 	
 app.get('/character-ajax', function(req, res){
