@@ -3,6 +3,7 @@ var mysql = require("mysql");
 var credentials = require("./credentials");
 //var qs = require("querystring");
 //var flash = require('flash');
+var mysql = require('mysql');
 var app = express();
 var http = require("http");
 var fs = require("fs");
@@ -32,7 +33,6 @@ function sendResponse(req, res, data) {
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.end(JSON.stringify(data));
 }
-
 app.get('/users', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
@@ -66,16 +66,18 @@ app.get('/users', function(req, res) {
   });
 });
 
-
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
 });
 
 
-app.get('/', function(req, res) {
+
+app.get('/home', function(req, res) {
   res.render('home');
 });
+
+
 
 app.post("/process", function(req, res) {
    console.log(req.query.form);
@@ -127,23 +129,20 @@ res.send(s);
 app.use(express.static(__dirname + '/public'));
 
 
-
-//routes go here
-app.get('/home', function(req, res) {
-  req.session.userName = 'Brandon';
-  console.log(req.cookies.website);
-  res.cookie('website', 'alert');
-  res.render('home');
-});
-
 //
-app.get('/sign-ajax', function(req, res){
+//app.post('/' function(req, res){
+//res.render('sign-ajax');
+//});
+
+app.get('/', function(req, res){
+  res.render('sign-ajax');
   req.session.flash = {
     type: 'success',
     intro: 'Thank you',
     message: 'Submission successful!',
   };
   return res.redirect(303, '/');
+
 });
 
 
@@ -263,6 +262,10 @@ app.get('/get_json_datas', function (req, res) {
     });
   });
 });
+
+
+//styles go here:
+
 
 
 // 404 catch-all handler (middleware)
