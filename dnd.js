@@ -74,7 +74,7 @@ app.use(function(req, res, next){
 
 
 app.get('/', function(req, res) {
-  res.render('sign-ajax');
+  res.render('home');
 });
 
 app.post("/process", function(req, res) {
