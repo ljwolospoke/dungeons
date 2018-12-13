@@ -1,62 +1,26 @@
 <h1>Dungeons And Dragons</h1>
 
-<p> We are going to have a page that dispalys character attrubutes containing Name, Gender, Age, Class, and Race.  </p>
+<img class="dnd" src="https://s-media-cache-ak0.pinimg.com/736x/c6/f8/ed/c6f8ed653fc1bb2e7d26f424b21c17cd.jpg">
+
+
+<style>
+body
+{
+   background-image: url("https://s-media-cache-ak0.pinimg.com/736x/c6/f8/ed/c6f8ed653fc1bb2e7d26f424b21c17cd.jpg");
+   background-color: #white;
+}
+
+
+
+dnd{
+width: 100%;
+{
+</style>
+
+
 {{> logout}}
-
-<h1>Sign In Page</h1>
-<div class="formContainer">
-  <form class="form-horizontal newsletterForm" role="form"
-      action="/process?form=newsletter" method="POST">
-  <input type="hidden" name="_csrf" value="{{csrf}}">
-  <div class="form-group">
-    <label for="fieldEmail" class="col-sm-2 control-label">Email</label>
-    <div class="col-sm-4">
-      <input type="text" class="form-control"
-      id="fieldName" name="email">
-    </div>
-  </div>
-<div class="form-group">
-  <label for="fieldPassword" class="col-sm-2 control-label">Password</label>
-  <div class="col-sm-4">
-    <input type="password" class="form-control" required
-      id="fieldPassword" name="password">
-  </div>
-</div>
-<div class="form-group">
-  <div class="col-sm-offset-2 col-sm-4">
-    <button type="submit" class="btn btn-default" onclick="counter();">Register</button>
-      </div>
-    </div>
-  </form>
-</div>
-{{'jquery'}}
-  <script>
-    $(document).ready(function(){
-      $('.newsletterForm').on('submit', function(evt){
-        evt.preventDefault();
-        var action = $(this).attr('action');
-        var $container = $(this).closest('.formContainer');
-$.ajax({
-          url: action,
-          type: 'POST',
-          data: $(this).serialize(),
-          success: function(data){
-            if(data.success){
-              $container.html('<h2>Thank you!</h2>' + data.message);
-            } else {
-              $container.html('There was a problem.');
-            }
-          },
-          error: function(){
-            $container.html('There was a problem.');
-          }
-        });
- });
-    });
-  </script>
-
 
 
 <img src="https://prodimage.images-bn.com/pimages/9780786965601_p0_v2_s550x406.jpg">
-{{> logout}}
+
 

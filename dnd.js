@@ -3,6 +3,7 @@ var mysql = require("mysql");
 var credentials = require("./credentials");
 //var qs = require("querystring");
 //var flash = require('flash');
+var mysql = require('mysql');
 var app = express();
 var http = require("http");
 var fs = require("fs");
@@ -32,7 +33,6 @@ function sendResponse(req, res, data) {
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.end(JSON.stringify(data));
 }
-
 app.get('/users', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
@@ -66,7 +66,6 @@ app.get('/users', function(req, res) {
   });
 });
 
-
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
@@ -74,8 +73,10 @@ app.use(function(req, res, next){
 
 
 app.get('/', function(req, res) {
-  res.render('sign-ajax');
+  res.render('home');
 });
+
+
 
 app.post("/process", function(req, res) {
    console.log(req.query.form);
@@ -263,6 +264,10 @@ app.get('/get_json_datas', function (req, res) {
     });
   });
 });
+
+
+//styles go here:
+
 
 
 // 404 catch-all handler (middleware)
