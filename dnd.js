@@ -72,7 +72,6 @@ app.use(function(req, res, next){
 });
 
 
-
 app.get('/home', function(req, res) {
   res.render('home');
 });
@@ -136,19 +135,17 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
   res.render('sign-ajax');
-  req.session.flash = {
+  req.session.user = {
     type: 'success',
     intro: 'Thank you',
     message: 'Submission successful!',
   };
-  return res.redirect(303, '/');
 
 });
-
+//
 
 app.get('/dice', function(req, res) {
         res.render('dice');
-//if (req.session.user) {}
 });
 	
 app.get('/character-ajax', function(req, res){
