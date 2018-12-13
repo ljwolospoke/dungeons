@@ -72,7 +72,7 @@ app.use(function(req, res, next){
 });
 
 
-app.get('/', function(req, res) {
+app.get('/home', function(req, res) {
   res.render('home');
 });
 
@@ -128,23 +128,20 @@ res.send(s);
 app.use(express.static(__dirname + '/public'));
 
 
-
-//routes go here
-app.get('/home', function(req, res) {
-  req.session.userName = 'Brandon';
-  console.log(req.cookies.website);
-  res.cookie('website', 'alert');
-  res.render('home');
-});
-
 //
-app.get('/sign-ajax', function(req, res){
+//app.post('/' function(req, res){
+//res.render('sign-ajax');
+//});
+
+app.get('/', function(req, res){
+  res.render('sign-ajax');
   req.session.flash = {
     type: 'success',
     intro: 'Thank you',
     message: 'Submission successful!',
   };
   return res.redirect(303, '/');
+
 });
 
 
