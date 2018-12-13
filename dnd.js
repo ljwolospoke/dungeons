@@ -1,14 +1,15 @@
 var express = require('express');
-var credentials = require('./credentials.js');
+var mysql = require("mysql");
+var credentials = require("./credentials");
+//var qs = require("querystring");
 //var flash = require('flash');
 var mysql = require('mysql');
 var app = express();
 var http = require("http");
 var fs = require("fs");
-var mysql = require("mysql");
-var credentials = require("./credentials");
+//var credentials = require("./credentials");
 var qs = require("querystring");
-
+//var mysql = require("mysql");
 
 var handlebars = require('express-handlebars')                                 
         .create({ defaultLayout:'main' });                                     
@@ -32,10 +33,8 @@ function sendResponse(req, res, data) {
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.end(JSON.stringify(data));
 }
-
-app.get('/character', function(req, res){
-
- var conn = mysql.createConnection(credentials.connection);
+app.get('/users', function(req, res) {
+  var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
     if (err) {
@@ -58,15 +57,14 @@ app.get('/character', function(req, res){
         outjson.data = rows;
       }
       // return json object that contains the result of the query
-      sendResponse(req, res, outjson);
-    });
+     //sendResponse(req, res, outjson) 
+     res.render('character-ajax', {
+       users: outjson
+     });
+   });
     conn.end();
   });
 });
-
-
-
-
 
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
@@ -129,7 +127,6 @@ res.send(s);
 //static pages
 app.use(express.static(__dirname + '/public'));
 
-app.use(require('body-parser').urlencoded({ extended: true }));
 
 
 //routes go here
@@ -153,6 +150,7 @@ app.get('/sign-ajax', function(req, res){
 
 app.get('/dice', function(req, res) {
         res.render('dice');
+//if (req.session.user) {}
 });
 	
 app.get('/character-ajax', function(req, res){
@@ -188,13 +186,15 @@ app.use(function(req, res, next){
   req.session.flash;
   next();
 });
-
-function sendResponse(req, res, data) {
+//sendResponse data
+app.get('/get_json_data', function(req, res ) {
+  var data  = {};
   res.writeHead(200, {"Content-Type": "application/json; charset=utf-8"});
   res.end(JSON.stringify(data));
-}
+});
 
-function users(req, res) {
+//users
+app.get('/get_jsons_data', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
@@ -222,9 +222,9 @@ function users(req, res) {
     });
     conn.end();
   });
-}
-
-function addUser(req, res) {
+});
+//addUser
+app.get('/get_json_datas', function (req, res) {
   var body = "";
   req.on("data", function (data) {
     body += data;
@@ -263,7 +263,7 @@ function addUser(req, res) {
       conn.end();
     });
   });
-}
+});
 
 
 //styles go here:
