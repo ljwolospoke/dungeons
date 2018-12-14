@@ -218,6 +218,14 @@ app.get('/get_jsons_data', function(req, res) {
     conn.end();
   });
 });
+
+//pull characters from the database
+conn.connect(function(err) {
+if (err) {
+console.error("ERROR: cannot connect: " + e);
+return;
+
+
 //addUser
 app.get('/get_json_datas', function (req, res) {
   var body = "";
