@@ -1,0 +1,14 @@
+<h1> Create your character <h1>
+<br>
+{{> logout}}
+
+<h2>Example Characters<h2>
+<ul>
+  {{#each characters.data}}
+   <li>
+    Name: {{Name}} <br>
+    Race: {{Race}} <br>
+    </li>
+  {{/each}}
+</ul>
+

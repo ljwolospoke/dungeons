@@ -65,7 +65,7 @@ app.get('/users', function(req, res) {
     conn.end();
   });
 });
-
+//session
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
@@ -135,7 +135,8 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
   res.render('sign-ajax');
-  req.session.user = {
+//goes into process  
+req.session.user = {
     type: 'success',
     intro: 'Thank you',
     message: 'Submission successful!',
@@ -162,25 +163,6 @@ app.get('/character-ajax', function(req, res){
   });
 });
 
-app.post('/process', function(req,res){
-  if(req.xhr || req.accepts('json,html')==='json'){
-    // if there were an error, we would send {error: 'error description' }
-    console.log(JSON.stringify(req.body));
-    res.send({
-      success: true,
-      message: "The Submission Was Successful!"
-    });
-  } else {
-    // if there were an error, we would redirect to an error page
-    res.redirect(303, '/');
-  }
-});
-
-app.use(function(req, res, next){
-  res.locals.flash = req.session.flash;
-  req.session.flash;
-  next();
-});
 //sendResponse data
 app.get('/get_json_data', function(req, res ) {
   var data  = {};
@@ -189,7 +171,7 @@ app.get('/get_json_data', function(req, res ) {
 });
 
 //users
-app.get('/get_jsons_data', function(req, res) {
+app.get('/characters', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
@@ -198,7 +180,7 @@ app.get('/get_jsons_data', function(req, res) {
       return;
     }
     // query the database
-    conn.query("SELECT * FROM USERS", function(err, rows, fields) {
+    conn.query("SELECT * FROM CHARACTERS", function(err, rows, fields) {
       // build json result object
       var outjson = {};
       if (err) {
@@ -213,7 +195,10 @@ app.get('/get_jsons_data', function(req, res) {
         outjson.data = rows;
       }
       // return json object that contains the result of the query
-      sendResponse(req, res, outjson);
+        res.render("characters", {
+         characters:outjson
+         });
+//      sendResponse(req, res, outjson);
     });
     conn.end();
   });
