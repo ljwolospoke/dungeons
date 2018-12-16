@@ -66,7 +66,7 @@ app.get('/users', function(req, res) {
   });
 });
 
-app.get('/users', function(req, res) {
+app.get('/character', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
@@ -90,8 +90,8 @@ app.get('/users', function(req, res) {
         outjson.data = rows;
       }
       // return json object that contains the result of the query
-     //sendResponse(req, res, outjson)
-     res.render('character-ajax', {
+     sendResponse(req, res, outjson)
+     res.render('character', {
        characters: outjson
      });
    });
@@ -133,7 +133,7 @@ app.post("/process", function(req, res) {
     });
    }
    else {
-    res.redirect(303, "/");
+    //res.redirect(303, "/");
   }
 });
 
@@ -212,9 +212,10 @@ app.post('/process', function(req,res){
     });
   } else {
     // if there were an error, we would redirect to an error page
-    res.redirect(303, '/');
+    //res.redirect(303, '/');
   }
 });
+
 
 app.use(function(req, res, next){
   res.locals.flash = req.session.flash;
