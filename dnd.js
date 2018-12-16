@@ -213,6 +213,7 @@ app.get('/characters', function(req, res) {
   });
 });
 
+
 //addUser
 app.post('/add_user', function (req, res) {
     console.log(req.body.name);
