@@ -1,4 +1,4 @@
-<h1>Sign In Page</h1>
+<h1>Please Add yourself to our database so that we can save your Username</h1>
 <div class="formContainer">
   <form class="form-horizontal newsletterForm" role="form"
       action="/add_user?form=newsletter" method="POST">
@@ -7,7 +7,7 @@
     <label for="fieldEmail" class="col-sm-2 control-label">UserName</label>
     <div class="col-sm-4">
       <input type="text" class="form-control"
-      id="FieldEmail" name="email">
+      id="FieldName" name="name">
     </div>
   </div>
 <div class="form-group">
@@ -37,12 +37,12 @@ $.ajax({
           data: $(this).serialize(),
           success: function(data){
             if(data.success){
-             window.location.href = "/home"; 
+             window.location.href = "/home";
               // $container.html('<h2>Thank you!</h2>' + data.message);
             } else {
               $container.html('There was a problem.');
             }
-          },
+      },
           error: function(){
             $container.html('There was a problem.');
           }
