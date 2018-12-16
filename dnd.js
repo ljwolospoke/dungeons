@@ -66,10 +66,50 @@ app.get('/users', function(req, res) {
   });
 });
 
+app.get('/users', function(req, res) {
+  var conn = mysql.createConnection(credentials.connection);
+  // connect to database
+  conn.connect(function(err) {
+    if (err) {
+      console.error("ERROR: cannot connect: " + e);
+      return;
+    }
+    // query the database
+    conn.query("SELECT * FROM CHARACTERS", function(err, rows, fields) {
+      // build json result object
+      var outjson = {};
+      if (err) {
+        // query failed
+        outjson.success = false;
+        outjson.message = "Query failed: " + err;
+      }
+      else {
+        // query successful
+        outjson.success = true;
+        outjson.message = "Query successful!";
+        outjson.data = rows;
+      }
+      // return json object that contains the result of the query
+     //sendResponse(req, res, outjson)
+     res.render('character-ajax', {
+       characters: outjson
+     });
+   });
+    conn.end();
+  });
+});
+
+
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
 });
+
+app.use(function(req, res, next){
+  res.locals.character = req.session.character;
+  next();
+});
+
 
 
 app.get('/home', function(req, res) {
@@ -220,10 +260,10 @@ app.get('/get_jsons_data', function(req, res) {
 });
 
 //pull characters from the database
-conn.connect(function(err) {
-if (err) {
-console.error("ERROR: cannot connect: " + e);
-return;
+//conn.connect(function(err) {
+//if (err) {
+//console.error("ERROR: cannot connect: " + e);
+//return;
 
 
 //addUser
@@ -266,7 +306,7 @@ app.get('/get_json_datas', function (req, res) {
       conn.end();
     });
   });
-});
+ });
 
 
 //styles go here:
