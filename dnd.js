@@ -246,6 +246,172 @@ app.post('/add_user', function (req, res) {
     });
 });
 
+//addcharacter
+app.post('/add_character', function (req, res) {
+    console.log(req.body.name);
+   console.log('post2');
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("INSERT INTO CHARACTERS (UserName) VALUE (?)", [req.body.name], function(err, rows, fields) {
+        // build json result object
+        console.log('err');
+        console.log(err);
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+        conn.end();
+    });
+});
+
+app.post('/add_character', function (req, res) {
+    console.log(req.body.name);
+   console.log('post2');
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("INSERT INTO CHARACTERS (Name) VALUE (?)", [req.body.name], function(err, rows, fields) {
+        // build json result object
+        console.log('err');
+        console.log(err);
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+        conn.end();
+    });
+});
+
+app.post('/add_character', function (req, res) {
+    console.log(req.body.name);
+   console.log('post2');
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("INSERT INTO CHARACTERS (Race) VALUE (?)", [req.body.name], function(err, rows, fields) {
+        // build json result object
+        console.log('err');
+        console.log(err);
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+        conn.end();
+    });
+});
+
+app.post('/add_character', function (req, res) {
+    console.log(req.body.name);
+   console.log('post2');
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("INSERT INTO CHARACTERS (Class) VALUE (?)", [req.body.name], function(err, rows, fields) {
+        // build json result object
+        console.log('err');
+        console.log(err);
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+        conn.end();
+    });
+});
+
+app.post('/add_character', function (req, res) {
+    console.log(req.body.name);
+   console.log('post2');
+    var conn = mysql.createConnection(credentials.connection);
+    // connect to database
+    conn.connect(function(err) {
+      if (err) {
+        console.error("ERROR: cannot connect: " + e);
+        return;
+      }
+      // query the database
+      conn.query("INSERT INTO CHARACTERS (Sex) VALUE (?)", [req.body.name], function(err, rows, fields) {
+        // build json result object
+        console.log('err');
+        console.log(err);
+        var outjson = {};
+        if (err) {
+          // query failed
+          outjson.success = false;
+          outjson.message = "Query failed: " + err;
+        }
+        else {
+          // query successful
+          outjson.success = true;
+          outjson.message = "Query successful!";
+        }
+        // return json object that contains the result of the query
+        sendResponse(req, res, outjson);
+      });
+        conn.end();
+    });
+});
+
 
 //styles go here:
 
