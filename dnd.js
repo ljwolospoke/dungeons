@@ -65,11 +65,55 @@ app.get('/users', function(req, res) {
     conn.end();
   });
 });
+<<<<<<< HEAD
+
+app.get('/character', function(req, res) {
+  var conn = mysql.createConnection(credentials.connection);
+  // connect to database
+  conn.connect(function(err) {
+    if (err) {
+      console.error("ERROR: cannot connect: " + e);
+      return;
+    }
+    // query the database
+    conn.query("SELECT * FROM CHARACTERS", function(err, rows, fields) {
+      // build json result object
+      var outjson = {};
+      if (err) {
+        // query failed
+        outjson.success = false;
+        outjson.message = "Query failed: " + err;
+      }
+      else {
+        // query successful
+        outjson.success = true;
+        outjson.message = "Query successful!";
+        outjson.data = rows;
+      }
+      // return json object that contains the result of the query
+     sendResponse(req, res, outjson)
+     res.render('character', {
+       characters: outjson
+     });
+   });
+    conn.end();
+  });
+});
+
+
+=======
 //session
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
 });
+
+app.use(function(req, res, next){
+  res.locals.character = req.session.character;
+  next();
+});
+
 
 
 app.get('/home', function(req, res) {
@@ -92,12 +136,18 @@ app.post("/process", function(req, res) {
       message: "Submission successful"
     });
    }
+<<<<<<< HEAD
+   else {
+    //res.redirect(303, "/");
+  }
+=======
   req.session.user = {
       type: 'success',
       intro: 'Thank you',
       message: 'Submission successful!',
     };
 
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 });
 
 var COUNTER = 0;
@@ -172,6 +222,29 @@ app.get('/character-ajax', function(req, res){
   });
 });
 
+<<<<<<< HEAD
+app.post('/process', function(req,res){
+  if(req.xhr || req.accepts('json,html')==='json'){
+    // if there were an error, we would send {error: 'error description' }
+    console.log(JSON.stringify(req.body));
+    res.send({
+      success: true,
+      message: "The Submission Was Successful!"
+    });
+  } else {
+    // if there were an error, we would redirect to an error page
+    //res.redirect(303, '/');
+  }
+});
+
+
+app.use(function(req, res, next){
+  res.locals.flash = req.session.flash;
+  req.session.flash;
+  next();
+});
+=======
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 //sendResponse data
 app.get('/get_json_data', function(req, res ) {
   var data  = {};
@@ -213,6 +286,15 @@ app.get('/characters', function(req, res) {
   });
 });
 
+<<<<<<< HEAD
+//pull characters from the database
+//conn.connect(function(err) {
+//if (err) {
+//console.error("ERROR: cannot connect: " + e);
+//return;
+
+=======
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 
 //addUser
 app.post('/add_user', function (req, res) {
@@ -245,7 +327,12 @@ app.post('/add_user', function (req, res) {
       });
       conn.end();
     });
+<<<<<<< HEAD
+  });
+ });
+=======
 });
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 
 
 //styles go here:
