@@ -65,6 +65,7 @@ app.get('/users', function(req, res) {
     conn.end();
   });
 });
+<<<<<<< HEAD
 
 app.get('/character', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
@@ -100,6 +101,9 @@ app.get('/character', function(req, res) {
 });
 
 
+=======
+//session
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 app.use(function(req, res, next){
   res.locals.user = req.session.user;
   next();
@@ -132,9 +136,18 @@ app.post("/process", function(req, res) {
       message: "Submission successful"
     });
    }
+<<<<<<< HEAD
    else {
     //res.redirect(303, "/");
   }
+=======
+  req.session.user = {
+      type: 'success',
+      intro: 'Thank you',
+      message: 'Submission successful!',
+    };
+
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 });
 
 var COUNTER = 0;
@@ -157,6 +170,12 @@ app.use(require('express-session') ({
   secret: credentials.cookieSecret,
 }));
 
+//addUser to database
+app.get('/addUser', function(req, res){
+res.render('addUser');
+console.log('appget');
+});
+
 app.get('/headers', function(req, res){
 res.set('Content-Type', 'text/plain');
 var s = '';
@@ -175,11 +194,12 @@ app.use(express.static(__dirname + '/public'));
 
 app.get('/', function(req, res){
   res.render('sign-ajax');
-  req.session.user = {
-    type: 'success',
-    intro: 'Thank you',
-    message: 'Submission successful!',
-  };
+//goes into process  
+//req.session.user = {
+  //  type: 'success',
+   // intro: 'Thank you',
+   // message: 'Submission successful!',
+  //};
 
 });
 //
@@ -202,6 +222,7 @@ app.get('/character-ajax', function(req, res){
   });
 });
 
+<<<<<<< HEAD
 app.post('/process', function(req,res){
   if(req.xhr || req.accepts('json,html')==='json'){
     // if there were an error, we would send {error: 'error description' }
@@ -222,6 +243,8 @@ app.use(function(req, res, next){
   req.session.flash;
   next();
 });
+=======
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 //sendResponse data
 app.get('/get_json_data', function(req, res ) {
   var data  = {};
@@ -229,8 +252,8 @@ app.get('/get_json_data', function(req, res ) {
   res.end(JSON.stringify(data));
 });
 
-//users
-app.get('/get_jsons_data', function(req, res) {
+//chRcter
+app.get('/characters', function(req, res) {
   var conn = mysql.createConnection(credentials.connection);
   // connect to database
   conn.connect(function(err) {
@@ -239,7 +262,7 @@ app.get('/get_jsons_data', function(req, res) {
       return;
     }
     // query the database
-    conn.query("SELECT * FROM USERS", function(err, rows, fields) {
+    conn.query("SELECT * FROM CHARACTERS", function(err, rows, fields) {
       // build json result object
       var outjson = {};
       if (err) {
@@ -254,32 +277,28 @@ app.get('/get_jsons_data', function(req, res) {
         outjson.data = rows;
       }
       // return json object that contains the result of the query
-      sendResponse(req, res, outjson);
+        res.render("characters", {
+         characters:outjson
+         });
+//      sendResponse(req, res, outjson);
     });
     conn.end();
   });
 });
 
+<<<<<<< HEAD
 //pull characters from the database
 //conn.connect(function(err) {
 //if (err) {
 //console.error("ERROR: cannot connect: " + e);
 //return;
 
+=======
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 
 //addUser
-app.get('/get_json_datas', function (req, res) {
-  var body = "";
-  req.on("data", function (data) {
-    body += data;
-    // 1e6 === 1 * Math.pow(10, 6) === 1 * 1000000 ~~~ 1MB
-    if (body.length > 1e6) {
-      // FLOOD ATTACK OR FAULTY CLIENT, NUKE REQUEST
-      req.connection.destroy();
-    }
-  });
-  req.on("end", function () {
-    var injson = JSON.parse(body);
+app.post('/add_user', function (req, res) {
+    console.log(req.body.name);
     var conn = mysql.createConnection(credentials.connection);
     // connect to database
     conn.connect(function(err) {
@@ -288,8 +307,10 @@ app.get('/get_json_datas', function (req, res) {
         return;
       }
       // query the database
-      conn.query("INSERT INTO USERS (NAME) VALUE (?)", [injson.name], function(err, rows, fields) {
+      conn.query("INSERT INTO USERS (UserName) VALUE (?)", [req.body.name], function(err, rows, fields) {
         // build json result object
+	console.log('err');
+	console.log(err);
         var outjson = {};
         if (err) {
           // query failed
@@ -306,8 +327,12 @@ app.get('/get_json_datas', function (req, res) {
       });
       conn.end();
     });
+<<<<<<< HEAD
   });
  });
+=======
+});
+>>>>>>> 1a10a3a0f7d4122abd3bb51a773aea8a9e44b543
 
 
 //styles go here:
