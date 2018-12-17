@@ -8,7 +8,8 @@
 <script src ="//code.jquery.com/jquery-2.0.2.min.js"></script>
 </head>
 <body>
-Number of users logged in: <span id="counter"></span>
+<h1>Number of users logged in:</h1> 
+<span id="counter"></span>
 <br><br>
 
 
@@ -17,7 +18,7 @@ Number of users logged in: <span id="counter"></span>
 
 
 
-Username: {{user.email}}<br><br>
+<h1>Username:</h1> {{user.email}}<br><br>
 
 {{#if flash}}
   <div class="alert alert-dismissible alert-{{flash.type}}">
@@ -39,9 +40,9 @@ Username: {{user.email}}<br><br>
 <style>
 nav{
   display: block;
-  width: 50%;
+  width: 100%;
   margin: auto auto auto auto;
-  height: 40px;
+  height: 70px;
   background: blue;
   padding: 5px;
   border-radius: 5px;
